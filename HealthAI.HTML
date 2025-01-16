@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthAI Diagnostics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(90deg, #007BFF, #0056b3);
+            color: #fff;
+            padding: 3rem 0;
+            text-align: center;
+            animation: fadeIn 2s;
+        }
+
+        header h1 {
+            font-size: 3.2rem;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: #007BFF;
+            text-decoration: none;
+            margin: 1.5rem 2rem;
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            color: #0056b3;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: #e9ecef;
+            animation: slideIn 2s;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: #007BFF;
+            font-weight: 600;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-top: 1rem;
+            color: #555;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 1rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            animation: fadeInUp 2s;
+        }
+
+        .feature {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature h3 {
+            font-size: 1.8rem;
+            color: #007BFF;
+            margin-bottom: 1rem;
+        }
+
+        .feature p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .pricing {
+            text-align: center;
+            margin-top: 4rem;
+            animation: fadeInUp 2s;
+        }
+
+        .pricing h2 {
+            color: #007BFF;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing ul {
+            list-style: none;
+            padding: 0;
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .pricing li {
+            margin: 1rem 0;
+        }
+
+        .contact {
+            text-align: center;
+            padding: 3rem;
+            background: #007BFF;
+            color: #fff;
+            border-radius: 8px;
+            margin-top: 4rem;
+            animation: fadeInUp 2s;
+        }
+
+        .contact h2 {
+            margin-bottom: 1rem;
+        }
+
+        .contact p {
+            margin: 0.5rem 0;
+        }
+
+        .contact a {
+            color: #ffdd57;
+            text-decoration: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #0056b3;
+            color: #fff;
+            margin-top: 4rem;
+            font-size: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 1.5rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            transition: background 0.3s;
+        }
+
+        .chatbot:hover {
+            background: #0056b3;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .chat-header {
+            background: #007BFF;
+            color: #fff;
+            padding: 1rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .chat-body {
+            padding: 1rem;
+            height: 200px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+        }
+
+        .chat-footer {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-footer input {
+            flex: 1;
+            border: none;
+            padding: 1rem;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .chat-footer button {
+            border: none;
+            background: #007BFF;
+            color: #fff;
+            padding: 1rem;
+            cursor: pointer;
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        .chat-footer button:hover {
+            background: #0056b3;
+        }
+
+        /* Additional styles for better UX */
+        .chat-body p {
+            margin: 0.5rem 0;
+        }
+
+        .chat-body strong {
+            color: #007BFF;
+        }
+
+        /* Media Queries for mobile responsiveness */
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-window {
+                width: 100%;
+                right: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>HealthAI Diagnostics</h1>
+    <p>Revolutionizing Healthcare with AI-Powered Diagnostics</p>
+</header>
+
+<nav>
+    <a href="#features" aria-label="Go to Features section">Features</a>
+    <a href="#pricing" aria-label="Go to Pricing section">Pricing</a>
+    <a href="#contact" aria-label="Go to Contact Us section">Contact Us</a>
+</nav>
+
+<section class="hero">
+    <h1>Your Health, Our Priority</h1>
+    <p>Early Detection. Accurate Diagnostics. Accessible Anywhere.</p>
+</section>
+
+<section class="container">
+    <h2 id="features" style="text-align:center; color:#007BFF;">Key Features</h2>
+    <div class="features">
+        <div class="feature">
+            <h3>AI Symptom Checker</h3>
+            <p>Get instant insights and recommendations based on your symptoms.</p>
+        </div>
+        <div class="feature">
+            <h3>Diagnostic Predictions</h3>
+            <p>Identify potential risks for diseases like diabetes and heart conditions.</p>
+        </div>
+        <div class="feature">
+            <h3>Device Integration</h3>
+            <p>Sync with your wearables and medical devices for real-time monitoring.</p>
+        </div>
+        <div class="feature">
+            <h3>Doctor Consultations</h3>
+            <p>Connect with certified doctors for further evaluation and care.</p>
+        </div>
+        <div class="feature">
+            <h3>Preventive Health Plans</h3>
+            <p>Receive personalized health tips and routines to stay ahead.</p>
+        </div>
+    </div>
+</section>
+
+<section class="container pricing">
+    <h2 id="pricing" style="color:#007BFF;">Pricing</h2>
+    <ul>
+        <li><strong>Free Plan:</strong> Basic symptom checker and health insights.</li>
+        <li><strong>Premium Plan:</strong> ₹299/month for detailed reports, device integration, and doctor consultations.</li>
+    </ul>
+</section>
+
+<section class="container contact">
+    <h2 id="contact">Contact Us</h2>
+    <p>Email: <a href="mailto:healthaiv1@gmail.com">support@healthai.com</a></p>
+    <p>Address: HealthAI Diagnostics</p>
+</section>
+
+<footer>
+    <p>© 2025 HealthAI Diagnostics. All rights reserved.</p>
+</footer>
+
+<button class="chatbot" onclick="toggleChat()">💬</button>
+<div class="chat-window" id="chatWindow">
+    <div class="chat-header">HealthAI Chatbot</div>
+    <div class="chat-body" id="chatBody">
+        <p><strong>ChatGPT:</strong> Hi! Please tell me your symptoms, and I’ll suggest the right medicine and dosage for you.</p>
+    </div>
+    <div class="chat-footer">
+        <input type="text" id="chatInput" placeholder="Describe your symptoms..." onkeydown="if(event.key === 'Enter') sendMessage()">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    function toggleChat() {
+        const chatWindow = document.getElementById('chatWindow');
+        chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function sendMessage() {
+        const chatInput = document.getElementById('chatInput');
+        const chatBody = document.getElementById('chatBody');
+        const userMessage = chatInput.value.trim();
+
+        if (userMessage) {
+            const userMessageElement = document.createElement('p');
+            userMessageElement.innerHTML = `<strong>You:</strong> ${userMessage}`;
+            chatBody.appendChild(userMessageElement);
+
+            chatInput.value = '';
+            
+            setTimeout(() => {
+                let botMessage = '';
+
+                // Fever and infection
+                if (/fever|temperature|high temperature/.test(userMessage.toLowerCase())) {
+                    botMessage = "It seems like you have a fever. I suggest taking Paracetamol 500mg every 6-8 hours, up to 4 tablets a day. Stay hydrated and rest well.";
+                } 
+                // Cold, Cough, Flu, and Upper Respiratory Infections
+                else if (/cold|cough|runny nose|sore throat/.test(userMessage.toLowerCase())) {
+                    botMessage = "You may have a cold or flu. Consider using a decongestant like Phenylephrine or taking a cough syrup like Dextromethorphan. Drink warm liquids for relief.";
+                }
+                // Asthma and Respiratory Issues
+                else if (/asthma|shortness of breath|wheezing/.test(userMessage.toLowerCase())) {
+                    botMessage = "For asthma, use a prescribed inhaler like Salbutamol for immediate relief. Ensure you have a long-term controller medication if prescribed.";
+                }
+                // Headache and Migraines
+                else if (/headache|migraine|head pain/.test(userMessage.toLowerCase())) {
+                    botMessage = "For headaches, try Ibuprofen 400mg or Acetaminophen 500mg every 6-8 hours. If you have migraines, Sumatriptan 50mg may help.";
+                }
+                // Nausea and Vomiting
+                else if (/nausea|vomiting|sick stomach/.test(userMessage.toLowerCase())) {
+                    botMessage = "You might be experiencing nausea. Consider taking Ondansetron 4mg or Metoclopramide for relief. Stay hydrated and avoid strong smells.";
+                }
+                // Stomach and Abdominal Pain
+                else if (/stomach pain|abdominal pain|cramps/.test(userMessage.toLowerCase())) {
+                    botMessage = "For stomach pain, try an antacid like Omeprazole 20mg or a mild painkiller like Paracetamol. If pain persists, consult a doctor.";
+                }
+                // Diarrhea
+                else if (/diarrhea|loose stool|watery stool/.test(userMessage.toLowerCase())) {
+                    botMessage = "For diarrhea, consider using Loperamide 2mg after the first loose stool, then 1mg after each subsequent stool. Drink fluids to avoid dehydration.";
+                }
+                // Constipation
+                else if (/constipation|bloated|difficulty passing stool/.test(userMessage.toLowerCase())) {
+                    botMessage = "For constipation, you can try a mild laxative like Bisacodyl 5mg. Drinking plenty of water and eating fiber-rich foods may help as well.";
+                }
+                // Allergies
+                else if (/allergy|sneezing|itchy eyes|runny nose/.test(userMessage.toLowerCase())) {
+                    botMessage = "For allergies, consider taking an antihistamine like Cetirizine 10mg once a day. Avoid allergens and use a saline nasal spray for relief.";
+                }
+                // Skin Rash and Eczema
+                else if (/skin rash|eczema|hives|itching/.test(userMessage.toLowerCase())) {
+                    botMessage = "A skin rash can be treated with Hydrocortisone cream 1% or Calamine lotion for itching. If symptoms persist, consult a dermatologist.";
+                }
+                // Diabetes
+                else if (/diabetes|high blood sugar|insulin/.test(userMessage.toLowerCase())) {
+                    botMessage = "For managing diabetes, it's important to monitor your blood sugar regularly. If needed, medications like Metformin 500mg can help lower blood sugar levels.";
+                }
+                // Hypertension (High Blood Pressure)
+                else if (/high blood pressure|hypertension|BP/.test(userMessage.toLowerCase())) {
+                    botMessage = "For high blood pressure, medications like Lisinopril 10mg or Amlodipine 5mg may be prescribed. Reduce salt intake and monitor your blood pressure regularly.";
+                }
+                // Hypotension (Low Blood Pressure)
+                else if (/low blood pressure|dizziness|fainting/.test(userMessage.toLowerCase())) {
+                    botMessage = "If you have low blood pressure, try increasing your salt intake, drinking more fluids, and wearing compression stockings. Consult a doctor for tailored treatment.";
+                }
+                // Asthma and COPD
+                else if (/chronic obstructive pulmonary disease|COPD|emphysema/.test(userMessage.toLowerCase())) {
+                    botMessage = "For COPD, medications like Salmeterol 50mcg and Fluticasone 250mcg inhalers can help. Please consult a doctor for a management plan.";
+                }
+                // Cancer (General Advice)
+                else if (/cancer|tumor|malignant/.test(userMessage.toLowerCase())) {
+                    botMessage = "Cancer is a serious condition. Please consult with an oncologist for the appropriate tests, treatments, and support options.";
+                }
+                // Stroke Symptoms
+                else if (/stroke|slurred speech|numbness|weakness/.test(userMessage.toLowerCase())) {
+                    botMessage = "If you suspect a stroke, seek immediate medical attention. Do not wait. Time is critical in stroke management.";
+                }
+                // Stroke Prevention
+                else if (/stroke prevention|antiplatelet/.test(userMessage.toLowerCase())) {
+                    botMessage = "For stroke prevention, medications like Aspirin 81mg may be recommended by a healthcare provider. Monitor blood pressure and cholesterol.";
+                }
+                // Depression and Anxiety
+                else if (/depression|anxiety|stress|nervous/.test(userMessage.toLowerCase())) {
+                    botMessage = "For anxiety or depression, a doctor may prescribe medications like Sertraline or Fluoxetine. Therapy and relaxation techniques may also help.";
+                }
+                // Insomnia
+                else if (/insomnia|sleep problems|can't sleep/.test(userMessage.toLowerCase())) {
+                    botMessage = "For insomnia, try taking Melatonin 3mg before bedtime. Establish a relaxing bedtime routine and limit screen time before sleep.";
+                }
+                // Heart Disease and Chest Pain
+                else if (/heart disease|chest pain|heart attack/.test(userMessage.toLowerCase())) {
+                    botMessage = "Chest pain may indicate a heart condition. Seek medical attention immediately. Medications like Aspirin and Nitroglycerin can be used in emergencies.";
+                }
+                // Urinary Tract Infection (UTI)
+                else if (/UTI|painful urination|burning sensation/.test(userMessage.toLowerCase())) {
+                    botMessage = "For urinary tract infections, antibiotics like Nitrofurantoin may be prescribed. Drink plenty of water and avoid caffeine.";
+                }
+                // Stroke Recovery
+                else if (/stroke recovery|rehabilitation|physical therapy/.test(userMessage.toLowerCase())) {
+                    botMessage = "Recovery from stroke often includes physical therapy, speech therapy, and medications to manage risk factors. Consult with a rehabilitation specialist.";
+                }
+                // Dehydration and Electrolyte Imbalance
+                else if (/dehydration|dry mouth|dark urine/.test(userMessage.toLowerCase())) {
+                    botMessage = "For dehydration, drink water and consider using Oral Rehydration Salts (ORS). If symptoms persist, consult a doctor for further evaluation.";
+                }
+                // Sepsis
+                else if (/sepsis|infection spreading|blood infection/.test(userMessage.toLowerCase())) {
+                    botMessage = "Sepsis is a medical emergency. Seek immediate medical help if you suspect an infection is spreading rapidly.";
+                }
+                // Rheumatoid Arthritis
+                else if (/rheumatoid arthritis|joint swelling|stiffness/.test(userMessage.toLowerCase())) {
+                    botMessage = "Rheumatoid arthritis can be managed with medications like Methotrexate and physical therapy to improve joint mobility.";
+                }
+                // Parkinson's Disease
+                else if (/parkinson's|tremors|shaking/.test(userMessage.toLowerCase())) {
+                    botMessage = "Parkinson's disease can be managed with medications like Levodopa and lifestyle changes to improve mobility and quality of life.";
+                }
+                // Epilepsy and Seizures
+                else if (/epilepsy|seizures|convulsions/.test(userMessage.toLowerCase())) {
+                    botMessage = "For seizures, anti-epileptic drugs like Valproic acid or Lamotrigine may be prescribed. Please consult a neurologist for a tailored treatment plan.";
+                }
+                // Alzheimer’s Disease
+                else if (/alzheimer's|memory loss|dementia/.test(userMessage.toLowerCase())) {
+                    botMessage = "Alzheimer’s disease is managed with medications like Donepezil and lifestyle changes. Consult a neurologist for further management.";
+                }else {
+                    botMessage = "Please provide more details on your symptoms or try mentioning common issues like fever, cold, headache, nausea, or stomach pain.";
+                }
+
+                const botMessageElement = document.createElement('p');
+                botMessageElement.innerHTML = `<strong>HealthAI:</strong> ${botMessage}`;
+                chatBody.appendChild(botMessageElement);
+
+                // Scroll to the bottom of the chat
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        }
+    }
+</script>
+
+</body>
+</html>
